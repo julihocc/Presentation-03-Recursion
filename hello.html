@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    document.write("Code in a loop:<br />");
+    let i = 0;
+    while (i < 5) {
+        document.write(i + " Hello, world!<br />");
+        i = i + 1;
+    }
+
+    document.write("Code in a function:<br />");
+
+    function hello(i) {
+        if (i === undefined) {
+            i = 0; // i defaults to 0 if unspecified.
+        }
+
+        document.write(i + " Hello, world!<br />");
+        i = i + 1;
+        if (i < 5) {
+            hello(i); // RECURSIVE CASE
+        } else {
+            return; // BASE CASE
+        }
+    }
+
+    hello();
+</script>
+</body>
+</html>

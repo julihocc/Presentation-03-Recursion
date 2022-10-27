@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+  const tailFactorial = (n, num=1) => {
+    document.write(n," ",num,"<br>")
+    if (n===1) {
+      return num
+    } else {
+      return tailFactorial(n-1, num*n)
+    }
+  }
+
+  tailFactorial(5)
+</script>
+</body>
+</html>

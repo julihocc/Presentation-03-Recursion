@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    // 1. The stack starts off as empty
+    let cardStack = [];
+    // 2.  Three strings representing cards are pushed onto the stack
+    cardStack.push("5 of diamonds");
+    document.write(cardStack + "<br />");
+    cardStack.push("3 of clubs");
+    document.write(cardStack + "<br />");
+    cardStack.push("ace of hearts");
+    document.write(cardStack + "<br />");
+    // Then the stack is popped ❸, which removes the ace of hearts and leaves the
+    //  three of clubs at the top of the stack again.
+    cardStack.pop()
+    document.write(cardStack + "<br />");
+</script>
+</body>
+</html>

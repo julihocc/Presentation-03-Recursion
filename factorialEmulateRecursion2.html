@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+  let callStack = [];
+  let returnValue;
+  // The explicit call stack, which holds "frame objects". ❶
+  const analyzeCallStack = (callStack) => {
+    document.write("CallStack Length: ",callStack.length,'<br>')
+    callStack.forEach(x => {
+      document.write("Return address information: ", x.returnAddr,'<br>')
+      document.write("-- Number: ",x.number,'<br>')
+    })
+    document.write('returnValue: ',returnValue,'<br>','<br>')
+  }
+
+  analyzeCallStack(callStack)
+
+  callStack.push({"returnAddr": "start", "number": 5});
+  // "Call" the "factorial() function". ❷
+
+  while (callStack.length > 0) {
+// The body of the "factorial() function":
+    analyzeCallStack(callStack);
+    let number = callStack[callStack.length - 1]["number"];
+    // Set number parameter.
+    let returnAddr = callStack[callStack.length - 1]["returnAddr"];
+
+
+    if (returnAddr === "start") {
+      if (number === 1) {
+        // BASE CASE
+        returnValue = number; // "Return" from "function call". ❸
+        callStack.pop()
+      } else {
+        // RECURSIVE CASE
+        callStack[callStack.length - 1]["returnAddr"] = "after recursive call";
+        // "Call" the "factorial() function":
+        callStack.push({"returnAddr": "start", "number": number - 1});
+        // ❹
+
+      }
+    } else {
+      returnValue = number * returnValue;
+      callStack.pop();
+      // "Return from function call". ❺
+    }
+  }
+
+  analyzeCallStack(callStack)
+</script>
+</body>
+</html>

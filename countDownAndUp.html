@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    function countDownAndUp(number) {
+        // ❶
+        document.write(number + "<br />");
+        if (number === 0) {
+            // BASE CASE
+            // ❷
+            document.write("Reached the base case.<br />");
+            return;
+        } else {
+            // RECURSIVE CASE
+            // ❸
+            countDownAndUp(number - 1);
+            // ❹
+            document.write(number + " returning<br />");
+            return;
+        }
+    }
+
+    // ❺
+    countDownAndUp(3);
+</script>
+</body>
+</html>
