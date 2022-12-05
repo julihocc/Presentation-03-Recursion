@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    function a() {
+        // ❶ This frame stores any arguments passed to a() (in this case, there are none), along with the local variable spam ❶ and the place where the execution should go when the a() function returns.
+        let spam = "Ant";
+        // ❷ When a() is called, it displays the contents of its local spam variable, which is Ant ❷.
+        document.write("spam is " + spam + "<br />");
+        // ❸  When the code in a() calls function b() ❸, a new frame object is created and placed on the call stack above the frame object for a().
+        b();
+        document.write("spam is " + spam + "<br />");
+    }
+
+    function b() {
+        // ❹  The b() function has its own local spam variable ❹, and calls c() ❺.
+        let spam = "Bobcat";
+        document.write("spam is " + spam + "<br />");
+        // ❺
+        c();
+        document.write("spam is " + spam + "<br />");
+    }
+
+    function c() {
+        // ❻  A new frame object for the c() call is created and placed on the call stack, and it contains c()’s local spam variable ❻.
+        let spam = "Coyote";
+        document.write("spam is " + spam + "<br />");
+    }
+
+    // ❼ When the program calls function a() ❼, a frame object is created and placed on the top of the call stack.
+    a();
+</script>
+</body>
+</html>

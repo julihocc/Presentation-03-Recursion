@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    function findSubstringIterative(needle, haystack) {
+        let i = 0;
+        while (i < haystack.length) {
+            if (haystack.substring(i, i + needle.length) == needle) {
+                return i; // Needle found.
+            }
+            i = i + 1
+        }
+        return -1; // Needle not found.
+    }
+
+    function findSubstringRecursive(needle, haystack, i) {
+        if (i === undefined) {
+            i = 0;
+        }
+
+        if (i >= haystack.length) {
+            return -1; // # BASE CASE (Needle not found.)
+        }
+
+        if (haystack.substring(i, i + needle.length) == needle) {
+            return i; // # BASE CASE (Needle found.)
+        } else {
+            // RECURSIVE CASE
+            return findSubstringRecursive(needle, haystack, i + 1);
+
+        }
+    }
+
+    document.write(findSubstringIterative("cat", "My cat Zophie") + "<br />");
+    document.write(findSubstringRecursive("cat", "My cat Zophie") + "<br />");
+</script>
+</body>
+</html>
