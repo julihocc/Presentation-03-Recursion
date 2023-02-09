@@ -12,5 +12,7 @@ function f(a, n) {
     }
 }
 
-console.log(Math.pow(3, 5));
-console.log(f(3, 5));
+const a = 7
+const n = 3
+console.log(Math.pow(a, n));
+console.log(f(a, n));

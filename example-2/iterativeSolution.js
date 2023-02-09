@@ -60,7 +60,7 @@ function iterativeSolution(a, n) {
     return table[n]
 }
 
-const a = 3
-const n = 5
+const a = 7
+const n = 3
 const output = iterativeSolution(a,n)
 console.log(`Solution: f(${a}, ${n})=${output}` )
