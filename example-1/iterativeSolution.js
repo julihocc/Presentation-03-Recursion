@@ -1,73 +1,68 @@
-import createNewSubFrame from "./createNewSubFrame.js";
-import printStack from "./printStack.js";
-
-
+class Frame{
+    constructor(n) {
+        this.n = n // non-negative integer
+        this.value = null // integer
+        this.parent = null // Frame
+        this.side = null // string
+        this.left = null // integer
+        this.right = null // integer
+    }
+}
 function iterativeSolution(N) {
-
-    console.clear()
-    console.log("Let's start with N = ", N, "")
-
-    const start = createNewSubFrame(N, null, null, null)
-    // Declare a stack and push the start frame to it
-    const stack = [start]
-    // Declare a variable to store the current frame
-    let frame
+    // Declare a stack and push the start currentFrame to it
+    const stack = [new Frame(N)]
     // This table will store the values of the frames
-    const table = {}
+    const table = {0:1, 1:1}
 
     while (stack.length > 0) {
+        const currentFrame = stack.pop()
 
-        printStack(stack)
-        frame = stack.pop()
-        console.log('In this round, we popped frame #', frame.n)
+        table[currentFrame.n] = currentFrame.value
 
-        table[frame.n] = frame.value
-
-        // If the frame has a value, we can calculate in many ways:
-        if (frame.value === null) {
-            // If the table has a non-null value for this frame, we can use it
-            if (table.hasOwnProperty(frame.n) && table[frame.n] !== null) {
-                frame.value = table[frame.n]
+        // If the currentFrame has a value, we can calculate in many ways:
+        if (currentFrame.value === null) {
+            // If the table has a non-null value for this currentFrame, we can use it
+            if (table.hasOwnProperty(currentFrame.n) && table[currentFrame.n] !== null) {
+                currentFrame.value = table[currentFrame.n]
             }
-            // If the frame number is 0 or 1, we can use the value directly
-            else if (frame.n <= 1) {
-                table[frame.n] = frame.value = 1
+            // If the currentFrame has both left and right children, we can calculate the value
+            else if (currentFrame.left !== null && currentFrame.right !== null) {
+                currentFrame.value = currentFrame.left * currentFrame.right + 1
+                table[currentFrame.n] = currentFrame.value
             }
-            // If the frame has both left and right children, we can calculate the value
-            else if (frame.left !== null && frame.right !== null) {
-                frame.value = frame.left * frame.right + 1
-                table[frame.n] = frame.value
-            }
-            // If there is no way to calculate the value in the previous ways, we need to push the frame back to the stack
+            // If there is no way to calculate the value in the previous ways, we need to push the currentFrame back to the stack
             else {
-                stack.push(frame)
+                stack.push(currentFrame)
 
                 // We also need to push the left and right children to the stack
                 // Let's calculate f(n-1) and f(n/2)
-                let leftKey = frame.n - 1
-                let leftValue = table.hasOwnProperty(leftKey) ? table[leftKey] : null
-                stack.push(createNewSubFrame(leftKey, leftValue, frame, 'left'))
+                const leftChild = new Frame(currentFrame.n-1)
+                leftChild.value = table.hasOwnProperty(leftChild.n) ? table[leftChild.n] : null
+                leftChild.parent = currentFrame
+                leftChild.side = 'left'
+                stack.push(leftChild)
 
-                let rightKey = Math.floor(frame.n / 2)
-                let rightValue = table.hasOwnProperty(rightKey) ? table[rightKey] : null
-                stack.push(createNewSubFrame(rightKey, rightValue, frame, 'right'))
+                const rightChild = new Frame(Math.floor(currentFrame.n/2))
+                rightChild.value = table.hasOwnProperty(rightChild.n) ? table[rightChild.n] : null
+                rightChild.parent = currentFrame
+                rightChild.side = 'right'
+                stack.push(rightChild)
             }
 
         }
-        // If the frame has a value...
+        // If the currentFrame has a value...
         else {
             // ...and it has a parent, we can update the parent's value
-            if (frame.parent !== null) {
+            if (currentFrame.parent !== null) {
                 // ...we update the corresponding side of the parent.
-                frame.parent[frame.side] = frame.value
+                currentFrame.parent[currentFrame.side] = currentFrame.value
                 // So, if the parent has both left and right children, we can calculate the value of the parent
             }
         }
-        console.log("Updated table: ", table)
     }
-    return frame.value
+    return table[N]
 }
 
-const input = 5
+const input = 10
 const output = iterativeSolution(input)
 console.log(`\n Solution: f(${input})=${output}` )

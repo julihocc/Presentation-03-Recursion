@@ -10,4 +10,4 @@ function f(n) {
     }
 }
 
-console.log(f(5));
+console.log(f(10));
