@@ -9,6 +9,10 @@ class Frame {
 const ackermann = (M, N) => {
     const stack = [new Frame(M, N)]
     const table = {}
+    table.hasOwnNonNullProperty = function (n) {
+        return this.hasOwnProperty(n) && this[n] !== null
+    }
+
     while (stack.length > 0) {
         const currentFrame = stack.pop()
         const {m, n, value} = currentFrame
@@ -20,7 +24,8 @@ const ackermann = (M, N) => {
             }
             // Case 2
             if (m>0 && n==0){
-                if (table.hasOwnProperty([m-1,1]) && table[[m-1,1]]!==null){
+                // if (table.hasOwnProperty([m-1,1]) && table[[m-1,1]]!==null){
+                if (table.hasOwnNonNullProperty([m-1,1])){
                         currentFrame.value = table[[m-1,1]]
                         table[[m,n]] = currentFrame.value
                 } else {
@@ -30,9 +35,11 @@ const ackermann = (M, N) => {
             }
             // Case 3
             if (m>0 && n>0){
-                if (table.hasOwnProperty([m,n-1]) && table[[m,n-1]]!==null){
-                    if (table.hasOwnProperty([m-1,table[[m,n-1]]]) && table[[m-1,table[[m,n-1]]]]!==null){
-                        currentFrame.value = table[[m-1,table[[m,n-1]]]]
+                // if (table.hasOwnProperty([m,n-1]) && table[[m,n-1]]!==null){
+                if (table.hasOwnNonNullProperty([m,n-1])){
+                // if (table.hasOwnProperty([m-1,table[[m,n-1]]]) && table[[m-1,table[[m,n-1]]]]!==null){
+                    if (table.hasOwnNonNullProperty([m-1,table[[m,n-1]]])){
+                    currentFrame.value = table[[m-1,table[[m,n-1]]]]
                         table[[m,n]] = currentFrame.value
                     } else {
                         stack.push(currentFrame)
@@ -48,6 +55,11 @@ const ackermann = (M, N) => {
 return table[[M,N]]
 }
 
-console.log(ackermann(0, 3))
-console.log(ackermann(3, 0))
+console.log(ackermann(0, 4))
+console.log(ackermann(4, 0))
 console.log(ackermann(3, 3))
+try {
+    console.log(ackermann(4, 1))
+} catch (error) {
+    console.log(error);
+}

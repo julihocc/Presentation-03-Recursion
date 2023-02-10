@@ -8,6 +8,11 @@ const ackermann = (m, n) => {
   }
 }
 
-console.log(ackermann(0, 3))
-console.log(ackermann(3, 0))
+console.log(ackermann(0, 4))
+console.log(ackermann(4, 0))
 console.log(ackermann(3, 3))
+try {
+  console.log(ackermann(4, 1))
+} catch (error) {
+  console.log(error);
+}
