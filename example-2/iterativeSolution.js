@@ -5,9 +5,6 @@ class Frame {
         this.parent = null // Frame || null
         this.child = null // Frame || null
     }
-    hasChild() {
-        return this.child !== null && this.child.value !== null
-    }
 }
 function iterativeSolution(a, n) {
 
@@ -15,9 +12,6 @@ function iterativeSolution(a, n) {
     const stack = [new Frame(n)]
     // This table will store the values of the frames
     const table = {0:1, 1:a}
-    table.hasOwnNonNullProperty = function (n) {
-        return this.hasOwnProperty(n) && this[n] !== null
-    }
 
     while (stack.length > 0) {
 
@@ -29,13 +23,13 @@ function iterativeSolution(a, n) {
         // If the frame has a no value, we can try to calculate this in many ways:
         if (currentFrame.value === null) {
             // If the table has a non-null value for the value of this frame, we can use it
-            if (table.hasOwnNonNullProperty(currentFrame.n)) {
+            if (table.hasOwnProperty(currentFrame.n) && table[currentFrame.n] !== null) {
                 currentFrame.value = table[currentFrame.n]
             }
             // If the frame has a child...
             // ... and the child has a non-null value,...
             // ... we can use the value of the child to calculate the value of the frame
-            else if (currentFrame.hasChild()) {
+            else if (currentFrame.child!== null && currentFrame.child.value !== null) {
                 currentFrame.value = currentFrame.n%2===0 ? currentFrame.child.value * currentFrame.child.value : currentFrame.child.value * currentFrame.child.value * a
                 table[currentFrame.n] = currentFrame.value
             }
@@ -48,18 +42,25 @@ function iterativeSolution(a, n) {
                 const child = new Frame(childKey)
                 child.value = table.hasOwnProperty(childKey) ? table[childKey] : null
                 child.parent = currentFrame
-                currentFrame.child = child
+                child.child = null
                 stack.push(child)
             }
 
         }
-
+        // If the frame has a value...
+        else {
+            // ...and it has a parent, we can update the parent's value
+            if (currentFrame.parent !== null) {
+                // ...we update the corresponding side of the parent.
+                currentFrame.parent.child = currentFrame
+                // So, if the parent has both left and right children, we can calculate the value of the parent
+            }
+        }
     }
     return table[n]
 }
 
-const a = 6
-const n = 4
-console.log(Math.pow(a, n));
+const a = 7
+const n = 3
 const output = iterativeSolution(a,n)
-console.log(output)
+console.log(`Solution: f(${a}, ${n})=${output}` )

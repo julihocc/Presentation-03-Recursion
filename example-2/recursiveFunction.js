@@ -12,7 +12,7 @@ function f(a, n) {
     }
 }
 
-const a = 6
-const n = 4
+const a = 7
+const n = 3
 console.log(Math.pow(a, n));
 console.log(f(a, n));
